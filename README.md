@@ -187,10 +187,11 @@ Each level overrides the previous, so project settings take priority over global
 
 ### Commands
 
-DCP provides a TUI panel and one prompt-producing slash command:
+DCP provides a TUI panel and prompt-producing slash commands:
 
 - `/dcp` — Opens the DCP panel with context, stats, and manual-mode controls.
 - `/dcp-compress [focus]` — Asks the model to run one compression pass. Optional focus text directs what content to compress, following the active `compress.mode`.
+- `/dcp head [--include-first] [focus]` — Asks the model to summarize the oldest visible part of the conversation. By default the initial user message is kept uncompressed and the range starts at the next visible item. Pass `--include-first` to include that message in the compression.
 
 ### Prompt Overrides
 
