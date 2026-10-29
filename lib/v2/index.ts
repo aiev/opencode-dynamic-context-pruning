@@ -297,9 +297,11 @@ export async function setup(ctx: Plugin.Context) {
                             const { state } = await load(invocation.sessionID)
                             const permission =
                                 state.compressPermission ?? config.compress.permission
+                            const firstToken = invocation.prompt.text.trim().split(/\s+/)[0]
                             if (
                                 name === "dcp-compress" ||
-                                invocation.prompt.text.trim().split(/\s+/)[0] === "compress"
+                                firstToken === "compress" ||
+                                firstToken === "head"
                             )
                                 allowed(state)
                             const output = { parts: [] }

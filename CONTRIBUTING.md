@@ -111,7 +111,7 @@ can be added to `opencode.json` in the sandbox's scratch workspace.
 The sandbox has its own sessions, scratch workspace, and configuration under
 `~/.local/state/dcp-sandbox/`. V1 uses the `v1/` subdirectory, with a separate
 database. Your host project and normal OpenCode configuration are not mounted.
-Try `/dcp` for the panel or `/dcp-compress` for a compression pass.
+Try `/dcp` for the panel, `/dcp-compress` for a compression pass, or `/dcp head` to summarize the oldest content.
 
 ```sh
 npm run sandbox -- --fresh                 # New profile; keep old runs

@@ -27,12 +27,14 @@ import {
     applyPendingManualTrigger,
     handleContextCommand,
     handleDecompressCommand,
+    handleHeadTriggerCommand,
     handleHelpCommand,
     handleManualToggleCommand,
     handleManualTriggerCommand,
     handleRecompressCommand,
     handleStatsCommand,
     handleSweepCommand,
+    parseHeadArgs,
 } from "./commands"
 import { type HostPermissionSnapshot } from "./host-permissions"
 import { compressPermission, syncCompressPermissionState } from "./compress-permission"
@@ -237,6 +239,27 @@ export function createCommandExecuteHandler(
 
             if (subcommand === "manual") {
                 await handleManualToggleCommand(commandCtx, subArgs[0]?.toLowerCase())
+                return
+            }
+
+            if (subcommand === "head") {
+                const options = parseHeadArgs(subArgs)
+                const prompt = await handleHeadTriggerCommand(commandCtx, options)
+                if (!prompt) {
+                    return
+                }
+
+                state.manualMode = "compress-pending"
+                state.pendingManualTrigger = {
+                    sessionId: input.sessionID,
+                    prompt,
+                }
+                const rawArgs = (input.arguments || "").trim()
+                output.parts.length = 0
+                output.parts.push({
+                    type: "text",
+                    text: rawArgs ? `/dcp ${rawArgs}` : "/dcp head",
+                })
                 return
             }
 
